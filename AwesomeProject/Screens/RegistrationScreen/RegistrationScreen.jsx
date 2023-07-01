@@ -1,4 +1,5 @@
 import { useState } from "react";
+import isEmail from "validator/lib/isEmail";
 import {
   StyleSheet,
   Keyboard,
@@ -25,11 +26,10 @@ export const RegistrationScreen = () => {
   };
 
   const handleSubmit = (state) => {
-    return console.log(state);
-  };
-
-  const handleToggleHiddenPassword = () => {
-    setHiddenPassword(!isHiddenPassword);
+    if (state.name && isEmail(state.email) && state.password) {
+      return console.log(state);
+    }
+    return console.log("Please enter all fields correctly");
   };
 
   return (
@@ -69,11 +69,12 @@ export const RegistrationScreen = () => {
                   value={state["password"]}
                   onChangeText={(value) => handleChange("password", value)}
                   placeholder="Password"
+                  maxLength={20}
                   style={styles.input}
                 />
                 <TouchableOpacity
                   style={styles.buttonShow}
-                  onPress={() => handleToggleHiddenPassword()}
+                  onPress={() => setHiddenPassword(!isHiddenPassword)}
                 >
                   <Text style={styles.authLink}>Show</Text>
                 </TouchableOpacity>
@@ -88,7 +89,7 @@ export const RegistrationScreen = () => {
             </TouchableOpacity>
 
             <TouchableOpacity>
-              <Text style={styles.authLink}>
+              <Text style={(styles.authLink, styles.inputPass)}>
                 Already have an account? Sign in
               </Text>
             </TouchableOpacity>

@@ -1,4 +1,5 @@
 import { useState } from "react";
+import isEmail from "validator/lib/isEmail";
 import {
   StyleSheet,
   KeyboardAvoidingView,
@@ -23,11 +24,10 @@ export const LoginScreen = () => {
   };
 
   const handleSubmit = () => {
-    return console.log(state);
-  };
-
-  const handleToggleHiddenPassword = () => {
-    setHiddenPassword(!isHiddenPassword);
+    if (isEmail(state.email) && state.password) {
+      return console.log(state);
+    }
+    return console.log("The email or password is incorrect");
   };
 
   return (
@@ -54,11 +54,12 @@ export const LoginScreen = () => {
                   value={state["password"]}
                   onChangeText={(value) => handleChange("password", value)}
                   placeholder="Password"
+                  maxLength={20}
                   style={styles.input}
                 />
                 <TouchableOpacity
                   style={styles.buttonShow}
-                  onPress={() => handleToggleHiddenPassword()}
+                  onPress={() => setHiddenPassword(!isHiddenPassword)}
                 >
                   <Text style={styles.authLink}>Show</Text>
                 </TouchableOpacity>
