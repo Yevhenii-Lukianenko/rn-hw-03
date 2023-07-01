@@ -18,6 +18,7 @@ export const RegistrationScreen = () => {
     email: "",
     password: "",
   });
+  const [isHiddenPassword, setHiddenPassword] = useState(true);
 
   const handleChange = (name, value) => {
     setState({ ...state, [name]: value });
@@ -25,6 +26,10 @@ export const RegistrationScreen = () => {
 
   const handleSubmit = (state) => {
     return console.log(state);
+  };
+
+  const handleToggleHiddenPassword = () => {
+    setHiddenPassword(!isHiddenPassword);
   };
 
   return (
@@ -60,13 +65,16 @@ export const RegistrationScreen = () => {
               />
               <View>
                 <TextInput
-                  secureTextEntry={true}
+                  secureTextEntry={isHiddenPassword}
                   value={state["password"]}
                   onChangeText={(value) => handleChange("password", value)}
                   placeholder="Password"
                   style={styles.input}
                 />
-                <TouchableOpacity style={styles.buttonShow}>
+                <TouchableOpacity
+                  style={styles.buttonShow}
+                  onPress={() => handleToggleHiddenPassword()}
+                >
                   <Text style={styles.authLink}>Show</Text>
                 </TouchableOpacity>
               </View>
